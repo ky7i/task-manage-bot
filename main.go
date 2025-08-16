@@ -31,13 +31,10 @@ func main() {
 
 	fmt.Println("Bot is running...")
 
-	ticker := time.NewTicker(1 * time.Hour)
-	defer ticker.Stop()
-
 	for {
-		select {
-		case <-ticker.C:
-			dg.ChannelMessageSend(channelID, "進捗どうですか？")
-		}
+		// In the Pomodoro Technique, work for 25m.
+		time.Sleep(25 * time.Minute)
+		dg.ChannelMessageSend(channelID, "進捗どうですか？")
+		time.Sleep(5 * time.Minute)
 	}
 }
