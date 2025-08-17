@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -29,7 +29,7 @@ func main() {
 	}
 	defer dg.Close()
 
-	fmt.Println("Bot is running...")
+	log.Println("Bot is running...")
 
 	for {
 		// In the Pomodoro Technique, work for 25m.
