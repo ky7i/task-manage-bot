@@ -1,3 +1,14 @@
+// Build this Go file.
+// go build -o taskManageBot.exe .
+//
+// My Usage
+// 1, Build this to taskManageBot.exe.
+// 2, Create .env file to set discord-bot parameters.
+// 3, Create below auto-hot-key file.
+// ```
+// +!d:: Run("taskManageBot.exe", <<yourWorkDirectory>>)
+// ```
+
 package main
 
 import (
@@ -12,7 +23,11 @@ import (
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		// Confirm a error message in 10 seconds
+		// and return to close cmd App.
+		time.Sleep(10 * time.Second)
+		return
 	}
 
 	token := os.Getenv("DISCORD_BOT_TOKEN")
@@ -20,12 +35,16 @@ func main() {
 
 	dg, err := discordgo.New("Bot " + token)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		time.Sleep(10 * time.Second)
+		return
 	}
 
 	err = dg.Open()
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		time.Sleep(10 * time.Second)
+		return
 	}
 	defer dg.Close()
 
@@ -37,4 +56,5 @@ func main() {
 		dg.ChannelMessageSend(channelID, "進捗どうですか？")
 		time.Sleep(5 * time.Minute)
 	}
+	// TODO: summarize and write progresses at Obsidian when given "Ctrl + c"
 }
